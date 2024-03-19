@@ -1,0 +1,25 @@
+name: helm-cli
+branding:
+  color: green
+  icon: package
+description: Deploy Helm chart in a GitHub action
+inputs:
+  action:
+    default: upgrade -i
+    description: upgrade -i, upgrade, install, uninstall, etc.
+    required: false
+  helm-version:
+    default: v3.10.1
+    required: false
+    chart-dir:
+    default: helm
+    description: Relative path from the repository root directory
+    required: false
+runs:
+  using: composite
+  steps:
+     - env:
+        DESIRED_VERSION: ${{ inputs.helm-version }}
+      name: Install Helm ${{ inputs.helm-version }}
+      run: curl -fsSL https://git.io/get_helm.sh | bash
+      shell: bash
